@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制面板</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 整體樣式 */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3e5d3; /* 柔和卡其色背景 */
+            color: #333; /* 主文字色調 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* 標題樣式 */
+        .header {
+            font-size: 26px;
+            font-weight: 700;
+            color: #8b4513; /* 深卡其色 */
+            margin: 20px 0 10px 0;
+            width: 90%;
+            max-width: 800px;
+            text-align: left;
+        }
+
+        .container {
+            background: #f9f4ec; /* 淡卡其色框背景，與主背景融合 */
+            border-radius: 16px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 區塊樣式 */
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #8b4513;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content {
+            background-color: #f5ede1; /* 更柔和的內部背景色 */
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(210, 180, 140, 0.4); /* 淡化的邊框 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .status {
+            font-size: 16px;
+            color: #333;
+        }
+
+        .status span {
+            font-weight: bold;
+        }
+
+        .button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(135deg, #d2b48c, #c4a484);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .button:hover {
+            background: linear-gradient(135deg, #c4a484, #d2b48c);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .button:active {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transform: translateY(0);
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+        }
+
+        /* 登出區塊樣式 */
+        .logout-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f5ede1;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(210, 180, 140, 0.4);
+        }
+
+        .logout-info {
+            font-size: 16px;
+            color: #8b4513;
+            font-weight: 500;
+        }
+
+        /* 通知訊息框 */
+        .notification-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f5ede1;
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(210, 180, 140, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">地震斷電系統控制面板</div>
+
+    <div class="container">
+        <!-- 地震通知 -->
+        <div class="section">
+            <div class="section-title">地震通知</div>
+            <div class="notification-box" id="earthquake-notifications">
+                <span id="earthquake-status" style="color: red;">N/A</span>
+            </div>
+        </div>
+
+        <!-- 家中斷電狀態 -->
+        <div class="section">
+            <div class="section-title">
+                ⚡ 家中斷電狀態
+            </div>
+            <div class="content">
+                <div id="power-status-container" style="display: flex; align-items: center; white-space: nowrap;">
+                    <span class="power-status-icon">電力狀態：</span>
+                    <span id="power-status" style="color: red; margin-left: 8px;">N/A</span>
+                </div>
+                <div class="button-container">
+                    <button class="button" onclick="powerMQTT()">復電</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 門的狀態 -->
+        <div class="section">
+            <div class="section-title">
+                🚪 門的狀態
+            </div>
+            <div class="content">
+                <div id="door-status-container" style="display: flex; align-items: center; white-space: nowrap;">
+                    <span>門狀態：</span>
+                    <span id="door-status" style="color: red; margin-left: 8px;">N/A</span>
+                </div>
+                <div class="button-container">
+                    <button class="button" onclick="doorMQTT()">關門</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 地震模擬 -->
+        <div class="section">
+            <div class="section-title">地震模擬</div>
+            <div class="content">
+                <div class="button-container">
+                    <button class="button" onclick="earthquakeMQTT()">發送模擬請求</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 登出 -->
+        <div class="section">
+            <div class="logout-bar">
+                <div class="logout-info">使用者：<span id="email-status" style="color: red;">N/A</span> | 系統：<span id="product_id-status" style="color: red;">N/A</span></div>
+                <form action="{{ url_for('logout')}}" method="get">
+                    <button type="submit" class="button">登出</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 恢復電力
+        function powerMQTT() {
+            fetch('/powerMQTT')
+                .then(response => response.text())
+                .then(data => {
+                    alert(`電力恢復：${data}`);
+                })
+                .catch(error => {
+                    alert('恢復電力時發生錯誤，請稍後重試');
+                });
+        }
+        // 關門
+        function doorMQTT() {
+            fetch('/doorMQTT')
+                .then(response => response.text())
+                .then(data => {
+                    alert(`門已關閉：${data}`);
+                })
+                .catch(error => {
+                    alert(`關門時發生錯誤，請稍後重試`);
+                });
+        }
+        // 地震模擬
+        function earthquakeMQTT() {
+            fetch('/earthquakeMQTT')
+                .then(response => response.text())
+                .then(data => {
+                    alert(`地震模擬請求已發送：${data}`);
+                })
+                .catch(error => {
+                    alert(`地震模擬請求時發生錯誤，請稍後重試`);
+                });
+        }
+
+        // 更新電力和門的狀態
+        const powerStatus = document.getElementById('power-status');
+        const doorStatus = document.getElementById('door-status');
+        const earthquakeStatus = document.getElementById('earthquake-status');
+        const emailStatus = document.getElementById('email-status');
+        const product_idStatus = document.getElementById('product_id-status');
+
+        function fetchData() {
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    powerStatus.textContent = data.power;
+                    doorStatus.textContent = data.door;
+                    earthquakeStatus.textContent = data.earthquake;
+                    emailStatus.textContent = data.email;
+                    product_idStatus.textContent = data.product_id;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        // 初次載入時獲取資料
+        fetchData();
+
+        // 每30秒獲取一次資料
+        setInterval(fetchData, 2000); //2秒
+
+        // Placeholder functions for button actions
+        function prevAction() {
+            alert('Previous button clicked!');
+        }
+
+        function nextAction() {
+            alert('Next button clicked!');
+        }
+    </script>
+</body>
+</html>

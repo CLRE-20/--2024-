@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登入</title>
+    <style>
+        /* 整體樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5deb3; /* 卡其色背景 */
+        }
+        .login-container {
+            text-align: center;
+            background: white;
+            padding: 20pt 40pt;
+            border-radius: 10pt;
+            box-shadow: 0pt 4pt 6pt rgba(0, 0, 0, 0.1);
+            border: 1pt solid #d2b48c; /* 卡其邊框 */
+            width: 280pt; /* 稍微縮短寬度 */
+            max-width: 100%;
+            box-sizing: border-box; /* 保證padding與border在內 */
+        }
+        .login-container h1 {
+            margin-bottom: 20pt;
+            font-size: 18pt;
+            color: #8b4513; /* 深卡其色標題 */
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin: 10pt 0pt 5pt;
+            color: #5f4c40; /* 卡其色文字 */
+            font-size: 10pt;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;  /* 確保輸入框寬度100% */
+            padding: 10pt;
+            margin-bottom: 15pt;
+            border: 1pt solid #d2b48c; /* 卡其邊框 */
+            border-radius: 5pt;
+            background-color: #fffaf0; /* 卡其底色 */
+            font-size: 10pt;
+            box-sizing: border-box; /* 包含padding和border在內 */
+        }
+                /* 錯誤訊息樣式 (紅色警示) */
+                .error-message {
+            color: red;
+            font-size: 9pt;
+            margin-top: -10pt; /* 調整間距 */
+            margin-bottom: 10pt;
+            padding: 8pt;
+            background-color: #ffe6e6; /* 淡紅色背景 */
+            border-radius: 5pt;
+            text-align: left;
+            font-weight: bold;
+        }
+        /* 自訂記住我 */
+        .remember-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 15pt;
+        }
+        .custom-checkbox {
+            position: relative;
+            width: 14pt;
+            height: 14pt;
+            margin-right: 5pt;
+            cursor: pointer;
+        }
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .custom-checkbox span {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 14pt;
+            height: 14pt;
+            background-color: #fffaf0; /* 卡其底色 */
+            border: 2pt solid #d2b48c; /* 邊框 */
+            border-radius: 3pt; /* 圓角 */
+            transition: all 0.3s;
+        }
+        .custom-checkbox input:checked + span {
+            background-color: #d2b48c; /* 卡其色背景 */
+            border-color: #8b4513; /* 深卡其色邊框 */
+        }
+        .custom-checkbox input:checked + span::after {
+            content: "";
+            position: absolute;
+            left: 4pt;
+            top: 2pt;
+            width: 4pt;
+            height: 8pt;
+            border: solid white;
+            border-width: 0pt 2pt 2pt 0pt;
+            transform: rotate(45deg);
+            transition: all 0.3s;
+        }
+        label[for="remember"] {
+            margin: 0;
+            color: #5f4c40; /* 卡其文字 */
+            font-size: 10pt;
+        }
+        button {
+            width: 100%;
+            padding: 10pt;
+            background-color: #d2b48c;
+            color: white;
+            border: none;
+            border-radius: 5pt;
+            font-size: 12pt;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c4a484; /* 深卡其色 */
+        }
+        .link-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10pt;
+            font-size: 10pt;
+        }
+        .link-container a {
+            color: #8b4513;
+            text-decoration: none;
+        }
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+        /* 自適應設計 */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 15pt;
+                width: 85%; /* 縮短寬度，適合手機版 */
+            }
+            h1 {
+                font-size: 14pt;
+            }
+            input[type="email"],
+            input[type="password"],
+            button {
+                font-size: 9pt;
+            }
+            .custom-checkbox {
+                width: 12pt;
+                height: 12pt;
+            }
+            .custom-checkbox span {
+                width: 12pt;
+                height: 12pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>登入</h1>
+        <!-- 錯誤訊息 -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <!-- 表單 -->
+        <form method="POST">
+            <label for="email">電子郵件：</label>
+            <input type="email" name="email" id="email" placeholder="請輸入電子郵件" required>
+            
+            <label for="password">密碼：</label>
+            <input type="password" name="password" id="password" placeholder="請輸入密碼" required>
+            
+            <div class="remember-container">
+                <label class="custom-checkbox">
+                    <input type="checkbox" name="remember" id="remember">
+                    <span></span>
+                </label>
+                <label for="remember">記住我</label>
+            </div>
+            
+            <button type="submit">登入</button>
+        </form>
+        <div class="link-container">
+            <a href="{{ url_for('forgot_password') }}">忘記密碼？</a>
+            <a href="{{ url_for('register') }}">註冊</a>
+        </div>
+    </div>
+</body>
+</html>

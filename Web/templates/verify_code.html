@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>驗證碼</title>
+    <style>
+        /* 整體樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5deb3; /* 卡其色背景 */
+        }
+        .verify-container {
+            text-align: center;
+            background: white;
+            padding: 20pt 40pt;
+            border-radius: 10pt;
+            box-shadow: 0pt 4pt 6pt rgba(0, 0, 0, 0.1);
+            border: 1pt solid #d2b48c; /* 卡其邊框 */
+            width: 280pt;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .verify-container h1 {
+            margin-bottom: 20pt;
+            font-size: 18pt;
+            color: #8b4513; /* 深卡其色標題 */
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin: 10pt 0pt 5pt;
+            color: #5f4c40; /* 卡其色文字 */
+            font-size: 10pt;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10pt;
+            margin-bottom: 15pt;
+            border: 1pt solid #d2b48c; /* 卡其邊框 */
+            border-radius: 5pt;
+            background-color: #fffaf0; /* 卡其底色 */
+            font-size: 10pt;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10pt;
+            background-color: #d2b48c;
+            color: white;
+            border: none;
+            border-radius: 5pt;
+            font-size: 12pt;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c4a484; /* 深卡其色 */
+        }
+        /* 錯誤訊息樣式 */
+        .error-message {
+            color: red;
+            font-size: 9pt;
+            margin-top: -10pt;
+            margin-bottom: 10pt;
+            padding: 8pt;
+            background-color: #ffe6e6; /* 淡紅色背景 */
+            border-radius: 5pt;
+            text-align: left;
+            font-weight: bold;
+        }
+        /* 自適應設計 */
+        @media (max-width: 480px) {
+            .verify-container {
+                padding: 15pt;
+                width: 85%;
+            }
+            h1 {
+                font-size: 14pt;
+            }
+            input[type="text"],
+            button {
+                font-size: 9pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="verify-container">
+        <h1>驗證碼</h1>
+        <!-- 錯誤訊息 -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <!-- 表單 -->
+        <form method="POST">
+            <label for="code">驗證碼：</label>
+            <input type="text" name="code" id="code" placeholder="請輸入驗證碼" required>
+            <button type="submit">驗證</button>
+        </form>
+    </div>
+</body>
+</html>

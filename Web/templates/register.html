@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>註冊</title>
+    <style>
+        /* 整體樣式 */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5deb3; /* 卡其色背景 */
+        }
+        .register-container {
+            text-align: center;
+            background: white;
+            padding: 20pt 40pt;
+            border-radius: 10pt;
+            box-shadow: 0pt 4pt 6pt rgba(0, 0, 0, 0.1);
+            border: 1pt solid #d2b48c; /* 卡其邊框 */
+            width: 280pt;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+        .register-container h1 {
+            margin-bottom: 20pt;
+            font-size: 18pt;
+            color: #8b4513; /* 深卡其色標題 */
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin: 10pt 0pt 5pt;
+            color: #5f4c40; /* 卡其色文字 */
+            font-size: 10pt;
+        }
+        input[type="email"],
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10pt;
+            margin-bottom: 15pt;
+            border: 1pt solid #d2b48c; /* 卡其邊框 */
+            border-radius: 5pt;
+            background-color: #fffaf0; /* 卡其底色 */
+            font-size: 10pt;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10pt;
+            background-color: #d2b48c;
+            color: white;
+            border: none;
+            border-radius: 5pt;
+            font-size: 12pt;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c4a484; /* 深卡其色 */
+        }
+        /* 錯誤訊息樣式 */
+        .error-message {
+            color: red;
+            font-size: 9pt;
+            margin-top: -10pt;
+            margin-bottom: 10pt;
+            padding: 8pt;
+            background-color: #ffe6e6; /* 淡紅色背景 */
+            border-radius: 5pt;
+            text-align: left;
+            font-weight: bold;
+        }
+        .link-container {
+            display: flex;
+            justify-content: space-between; /* 讓兩個連結分別對齊到容器的兩端 */
+            margin-top: 15pt; /* 調整連結和表單之間的間距 */
+        }
+
+        .link-container a {
+            color: #8b4513; /* 維持連結的顏色 */
+            text-decoration: none;
+            font-size: 10pt;
+        }
+
+        .link-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* 自適應設計 */
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 15pt;
+                width: 85%;
+            }
+            h1 {
+                font-size: 14pt;
+            }
+            input[type="email"],
+            input[type="text"],
+            input[type="password"],
+            button {
+                font-size: 9pt;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>註冊</h1>
+        <!-- 錯誤訊息 -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="error-message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        <!-- 表單 -->
+        <form method="POST">
+            <label for="email">電子郵件：</label>
+            <input type="email" name="email" id="email" placeholder="請輸入電子郵件" required>
+            
+            <label for="product_id">產品編號：</label>
+            <input type="text" name="product_id" id="product_id" placeholder="請輸入產品編號" required>
+            
+            <label for="password">密碼：</label>
+            <input type="password" name="password" id="password" placeholder="請輸入密碼" required>
+            
+            <button type="submit">註冊</button>
+        </form>
+        <div class="link-container">
+            <a href="{{ url_for('forgot_password') }}">忘記密碼？</a>
+            <a href="{{ url_for('login') }}">登入</a>
+        </div>
+    </div>
+</body>
+</html>
