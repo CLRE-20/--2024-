@@ -62,7 +62,7 @@ def run():
 
 def earthquake_finish():
     open_json_earthquake_r()
-    data_earthquake["earthquake"] = "無地震發生"  # 更新 earthquake 的值
+    data_earthquake["earthquake"] = ""  # 更新 earthquake 的值
     open_json_earthquake_w()
 
 #run()

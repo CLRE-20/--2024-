@@ -6,12 +6,17 @@
     <title>控制面板</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS 變數 */
+        :root {
+            --status-color: red; /* 預設字體顏色 */
+        }
+
         /* 整體樣式 */
         body {
             font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f3e5d3; /* 柔和卡其色背景 */
+            background-color: #f5deb3; /* 卡其色背景 */
             color: #333; /* 主文字色調 */
             display: flex;
             flex-direction: column;
@@ -61,6 +66,7 @@
             padding: 15px;
             border: 1px solid rgba(210, 180, 140, 0.4); /* 淡化的邊框 */
             display: flex;
+            color: #8b4513;
             justify-content: space-between;
             align-items: center;
         }
@@ -131,6 +137,14 @@
             padding: 15px;
             border: 1px solid rgba(210, 180, 140, 0.4);
         }
+
+        /* 同步狀態顏色 */
+        #email-status, 
+        #product_id-status, 
+        #power-status, 
+        #door-status {
+            color: var(--status-color);
+        }
     </style>
 </head>
 <body>
@@ -153,7 +167,7 @@
             <div class="content">
                 <div id="power-status-container" style="display: flex; align-items: center; white-space: nowrap;">
                     <span class="power-status-icon">電力狀態：</span>
-                    <span id="power-status" style="color: red; margin-left: 8px;">N/A</span>
+                    <span id="power-status">N/A</span>
                 </div>
                 <div class="button-container">
                     <button class="button" onclick="powerMQTT()">復電</button>
@@ -169,7 +183,7 @@
             <div class="content">
                 <div id="door-status-container" style="display: flex; align-items: center; white-space: nowrap;">
                     <span>門狀態：</span>
-                    <span id="door-status" style="color: red; margin-left: 8px;">N/A</span>
+                    <span id="door-status" style="color: red;">N/A</span>
                 </div>
                 <div class="button-container">
                     <button class="button" onclick="doorMQTT()">關門</button>
@@ -177,21 +191,28 @@
             </div>
         </div>
 
-
-        <!-- 地震模擬 -->
+        <!-- 地震模擬 --> 
         <div class="section">
             <div class="section-title">地震模擬</div>
-            <div class="content">
-                <div class="button-container">
-                    <button class="button" onclick="earthquakeMQTT()">發送模擬請求</button>
+            <div class="logout-bar">
+                <div class="logout-info" ><!-- style="display: flex; flex-direction: column;"> -->
+                    地震強度：<span id="magnitude-status" style="color: red;">N/A</span><br>
+                    發生地區：<span id="location-status" style="color: red;">N/A</span>
                 </div>
+                <div class="button-container">
+                    <button type="button" class="button" onclick="earthquakeMQTT()">發送模擬請求</button>
+                </div>               
             </div>
         </div>
 
         <!-- 登出 -->
         <div class="section">
+            <div class="section-title">登入資訊</div>
             <div class="logout-bar">
-                <div class="logout-info">使用者：<span id="email-status" style="color: red;">N/A</span> | 系統：<span id="product_id-status" style="color: red;">N/A</span></div>
+                <div class="logout-info">
+                    使用者：<span id="email-status" style="color: red;">N/A</span><br>
+                    產品編號：<span id="product_id-status" style="color: red;">N/A</span>
+                </div>
                 <form action="{{ url_for('logout')}}" method="get">
                     <button type="submit" class="button">登出</button>
                 </form>
@@ -240,6 +261,8 @@
         const earthquakeStatus = document.getElementById('earthquake-status');
         const emailStatus = document.getElementById('email-status');
         const product_idStatus = document.getElementById('product_id-status');
+        const magnitudeStatus = document.getElementById('magnitude-status');
+        const locationStatus = document.getElementById('location-status');
 
         function fetchData() {
             fetch('/data')
@@ -250,6 +273,8 @@
                     earthquakeStatus.textContent = data.earthquake;
                     emailStatus.textContent = data.email;
                     product_idStatus.textContent = data.product_id;
+                    magnitudeStatus.textContent = data.magnitude;
+                    locationStatus.textContent = data.location;
                 })
                 .catch(error => console.error('Error fetching data:', error));
         }

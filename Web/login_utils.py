@@ -16,4 +16,4 @@ def save_login_data_to_json(email, product_id):
     with open('data.json', 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-    print(f"Login info saved: {data}")
+    print(f"登入資訊已處存: {data}")

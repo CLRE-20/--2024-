@@ -68,8 +68,9 @@ def login():
             else:  # 否則導向預設頁面
                 # 儲存登入資料到 data.json
                 login_utils.save_login_data_to_json(user.email, user.product_id)  # 這裡調用 login.py 中的函式
+                login_utils.save_login_data_to_json(user.email, user.product_id)  # 這裡調用 login.py 中的函式
 
-                return redirect(url_for('panel'))  # 假設有 panel 頁面
+                return redirect(url_for('panel'))  # panel 頁面
         else:
             flash('無效的憑證')
     return render_template('login.html')
