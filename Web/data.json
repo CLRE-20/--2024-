@@ -1,12 +1,12 @@
 {
-    "power": "正常",
-    "door": "開啟",
-    "earthquake": "未發生",
-    "email": "user@example.com",
-    "product_id": "12345",
-    "magnitude": "3級",
-    "location": "臺北市",
-    "state": "運行中",
-    "level": "3級",
-    "area": "臺北市"
+    "power": "\u958b",
+    "door": "\u95dc",
+    "earthquake": " ",
+    "email": "123@gmail.com",
+    "product_id": "t1",
+    "magnitude": "",
+    "location": "",
+    "state": "\u6a21\u64ec\u7d50\u675f",
+    "level": " ",
+    "area": " "
 }

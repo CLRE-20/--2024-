@@ -140,7 +140,7 @@ def earthquake_state_power_door_2(): # 運行狀態
 
 def earthquake_sleep():
     open_json_state_r()
-    data_state["state"] = " " # 更新 state 的值
+    data_state["state"] = "模擬結束" # 更新 state 的值
     open_json_state_w()
 
 def earthquake_level():
