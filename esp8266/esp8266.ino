@@ -1,5 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include <Servo.h> // 伺服馬達
 
 // WiFi 和 MQTT 配置
 const char* ssid = "Doludo";
@@ -12,6 +13,9 @@ const char* mqttPassword = "8266";
 // MQTT 客戶端
 WiFiClient espClient;
 PubSubClient client(espClient);
+
+// 創建 Servo 實例
+Servo myServo;
 
 void setup() {
   // 初始化序列埠
@@ -33,6 +37,11 @@ void setup() {
 
   // 連接MQTT伺服器
   connectToMQTT();
+  // 初始化伺服馬達，假設連接在 D4 引腳
+  myServo.attach(15);// GPIO 02 腳位
+  myServo.write(30); // 初始化伺服馬達為 0 度
+  //繼電器
+  pinMode(10,OUTPUT);
 }
 
 void connectToMQTT() {
@@ -66,8 +75,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("]，來自[");
     Serial.print(topic);
     Serial.println("]路由");
+    digitalWrite(10,HIGH);
   }
-  else if (String(topic) == "mqtt/app" && receivedMessage == "door") {
+  else if (String(topic) == "mqtt/app" && receivedMessage == "Door") {
+    myServo.write(30); // 轉回 0 度
     Serial.print("通過認證");
     Serial.print("訊息：");
     Serial.print("[");
@@ -77,6 +88,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.println("]路由");
   }
   else if (String(topic) == "mqtt/app" && receivedMessage == "earthquake") {
+    myServo.write(120); // 轉動到 90 度
     Serial.print("通過認證");
     Serial.print("訊息：");
     Serial.print("[");
@@ -84,6 +96,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("]，來自[");
     Serial.print(topic);
     Serial.println("]路由");
+    digitalWrite(10,LOW);
   }
   else {
     Serial.print("認證失敗!!");
