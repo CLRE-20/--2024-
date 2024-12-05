@@ -175,10 +175,17 @@ def DoorMQTT():
 
 @app.route('/earthquakeMQTT')
 def earthquakeMQTT():
+    earthquake.earthquake_state_mqtt()   #mqtt狀態
+    earthquake.run_earthquake() # 更新地震通知
+    earthquake.earthquake_level() #地震等級
+    earthquake.earthquake_area() #地震地區
     mqtt_client_s_earthquake.run_test()  # mqtt
+    earthquake.earthquake_state_power_door_1() #電 門狀態更新中
     earthquake.run()  # 更新狀態
+    earthquake.earthquake_state_power_door_2() #電 門狀態更新完畢
     time.sleep(30)
-    earthquake.earthquake_finish()
+    earthquake.earthquake_finish() # 結束
+    earthquake.earthquake_sleep() # 結束
     return "地震模擬！"
 
 @app.route('/data')

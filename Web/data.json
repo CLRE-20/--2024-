@@ -1,9 +1,12 @@
 {
-    "power": "開",
-    "door": "關",
-    "earthquake": "無地震發生",
-    "email": "123@gmail.com",
-    "product_id": "t1",
-    "magnitude": "123",
-    "location": "456"
+    "power": "正常",
+    "door": "開啟",
+    "earthquake": "未發生",
+    "email": "user@example.com",
+    "product_id": "12345",
+    "magnitude": "3級",
+    "location": "臺北市",
+    "state": "運行中",
+    "level": "3級",
+    "area": "臺北市"
 }

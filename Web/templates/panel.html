@@ -125,7 +125,13 @@
             font-size: 16px;
             color: #8b4513;
             font-weight: 500;
+            white-space: nowrap;
         }
+
+        .logout-info span {
+            margin-right: 20px;
+        }
+
 
         /* 通知訊息框 */
         .notification-box {
@@ -195,10 +201,11 @@
         <div class="section">
             <div class="section-title">地震模擬</div>
             <div class="logout-bar">
-                <div class="logout-info" ><!-- style="display: flex; flex-direction: column;"> -->
-                    地震強度：<span id="magnitude-status" style="color: red;">N/A</span><br>
-                    發生地區：<span id="location-status" style="color: red;">N/A</span>
-                </div>
+                <div class="logout-info">
+                    運行狀態：<span id="state-status" style="color: red;">N/A</span><br>
+                    地震強度：<span id="level-status" style="color: red;">N/A</span><br>
+                    發生地區：<span id="area-status" style="color: red;">N/A</span>
+                </div>                
                 <div class="button-container">
                     <button type="button" class="button" onclick="earthquakeMQTT()">發送模擬請求</button>
                 </div>               
@@ -263,21 +270,29 @@
         const product_idStatus = document.getElementById('product_id-status');
         const magnitudeStatus = document.getElementById('magnitude-status');
         const locationStatus = document.getElementById('location-status');
+        const stateStatus = document.getElementById('state-status');
+        const levelStatus = document.getElementById('level-status');
+        const areaStatus = document.getElementById('area-status');
 
         function fetchData() {
             fetch('/data')
-                .then(response => response.json())
-                .then(data => {
-                    powerStatus.textContent = data.power;
-                    doorStatus.textContent = data.door;
-                    earthquakeStatus.textContent = data.earthquake;
-                    emailStatus.textContent = data.email;
-                    product_idStatus.textContent = data.product_id;
-                    magnitudeStatus.textContent = data.magnitude;
-                    locationStatus.textContent = data.location;
-                })
-                .catch(error => console.error('Error fetching data:', error));
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data fetched:', JSON.stringify(data, null, 2)); // 更清晰的調試信息
+                powerStatus.textContent = data.power;
+                doorStatus.textContent = data.door;
+                earthquakeStatus.textContent = data.earthquake;
+                emailStatus.textContent = data.email;
+                product_idStatus.textContent = data.product_id;
+                magnitudeStatus.textContent = data.magnitude;
+                locationStatus.textContent = data.location;
+                stateStatus.textContent = data.state;
+                levelStatus.textContent = data.level;
+                areaStatus.textContent = data.area;
+            })
+            .catch(error => console.error('Error fetching data:', error));
         }
+
 
         // 初次載入時獲取資料
         fetchData();
