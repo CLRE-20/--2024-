@@ -118,3 +118,10 @@
 3. 支援用戶友好操作界面，提供多樣化功能如模擬地震、智能復電。
 
 此系統適用於地震頻發地區，能有效提升用戶的安全感與便捷性。
+
+
+
+- [FFmpeg](https://github.com/FFmpeg/FFmpeg)
+- [gradio](https://github.com/gradio-app/gradio)
+- [faster-whisper](https://github.com/SYSTRAN/faster-whisper)
+- [FunASR](https://github.com/alibaba-damo-academy/FunASR)
