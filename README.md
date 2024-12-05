@@ -119,9 +119,3 @@
 
 此系統適用於地震頻發地區，能有效提升用戶的安全感與便捷性。
 
-
-## Thanks to all contributors for their efforts
-
-<a href="https://github.com/X-T-E-R/GPT-SoVITS-Inference/graphs/contributors" target="_blank">
-  <img src="https://contrib.rocks/image?repo=X-T-E-R/GPT-SoVITS-Inference" />
-</a>
