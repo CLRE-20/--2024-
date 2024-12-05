@@ -42,6 +42,7 @@
 - **數據交互**：與 MQTT 通訊實現數據發布與接收。
 - **安全性**：通過 MQTT 帳號密碼驗證，確保數據傳輸安全。
 - **實時監控**：地震警報與電力狀態。
+
 ![圖](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/Web/Screenshot_20241205_174748.jpg)
 ---
 
