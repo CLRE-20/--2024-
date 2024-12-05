@@ -159,7 +159,7 @@
     <div class="container">
         <!-- 地震通知 -->
         <div class="section">
-            <div class="section-title">地震通知</div>
+            <div class="section-title">地震通知🔔</div>
             <div class="notification-box" id="earthquake-notifications">
                 <span id="earthquake-status" style="color: red;">N/A</span>
             </div>
@@ -168,7 +168,7 @@
         <!-- 家中斷電狀態 -->
         <div class="section">
             <div class="section-title">
-                ⚡ 家中斷電狀態
+                家中斷電狀態⚡
             </div>
             <div class="content">
                 <div id="power-status-container" style="display: flex; align-items: center; white-space: nowrap;">
@@ -184,7 +184,7 @@
         <!-- 門的狀態 -->
         <div class="section">
             <div class="section-title">
-                🚪 門的狀態
+                門的狀態🚪
             </div>
             <div class="content">
                 <div id="door-status-container" style="display: flex; align-items: center; white-space: nowrap;">
@@ -199,29 +199,33 @@
 
         <!-- 地震模擬 --> 
         <div class="section">
-            <div class="section-title">地震模擬</div>
+            <div class="section-title">地震模擬🌍</div>
             <div class="logout-bar">
                 <div class="logout-info">
                     運行狀態：<span id="state-status" style="color: red;">N/A</span><br>
                     地震強度：<span id="level-status" style="color: red;">N/A</span><br>
                     發生地區：<span id="area-status" style="color: red;">N/A</span>
-                </div>                
-                <div class="button-container">
-                    <button type="button" class="button" onclick="earthquakeMQTT()">發送模擬請求</button>
-                </div>               
+                </div>
+            </div>
+            <div class="button-container" style="margin-top: 10px; width: 100%;">
+                <button type="button" class="button" style="width: 100%;" onclick="earthquakeMQTT()">發送模擬請求</button>
             </div>
         </div>
+        
+        
 
         <!-- 登出 -->
         <div class="section">
-            <div class="section-title">登入資訊</div>
+            <div class="section-title">登入資訊👤</div>
             <div class="logout-bar">
                 <div class="logout-info">
                     使用者：<span id="email-status" style="color: red;">N/A</span><br>
                     產品編號：<span id="product_id-status" style="color: red;">N/A</span>
                 </div>
-                <form action="{{ url_for('logout')}}" method="get">
-                    <button type="submit" class="button">登出</button>
+            </div>
+            <div class="button-container" style="margin-top: 10px; width: 100%;">
+                <form action="{{ url_for('logout')}}" method="get" style="width: 100%;">
+                    <button type="submit" class="button" style="width: 100%;">登出</button>
                 </form>
             </div>
         </div>

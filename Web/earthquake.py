@@ -19,10 +19,6 @@ area = [
     '嘉義縣', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣',
     '臺東縣', '澎湖縣', '金門縣', '連江縣'
 ]
-# 從地震等級列表中隨機選擇一個地震等級
-random_level = random.choice(level)
-# 從台灣地區列表中隨機選擇一個地區
-random_area = random.choice(area)
 
 def open_json_power_r():  
     global data_power  # 使用全局變數
@@ -144,11 +140,15 @@ def earthquake_sleep():
     open_json_state_w()
 
 def earthquake_level():
+    # 從地震等級列表中隨機選擇一個地震等級
+    random_level = random.choice(level)
     open_json_level_r()
     data_level["level"] = random_level # 更新 state 的值
     open_json_level_w()
 
 def earthquake_area():
+    # 從台灣地區列表中隨機選擇一個地區
+    random_area = random.choice(area)
     open_json_area_r()
     data_area["area"] = random_area # 更新 state 的值
     open_json_area_w()

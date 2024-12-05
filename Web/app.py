@@ -183,7 +183,7 @@ def earthquakeMQTT():
     earthquake.earthquake_state_power_door_1() #電 門狀態更新中
     earthquake.run()  # 更新狀態
     earthquake.earthquake_state_power_door_2() #電 門狀態更新完畢
-    time.sleep(30)
+    time.sleep(10)
     earthquake.earthquake_finish() # 結束
     earthquake.earthquake_sleep() # 結束
     return "地震模擬！"
