@@ -6,11 +6,6 @@
     <title>控制面板</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS 變數 */
-        :root {
-            --status-color: red; /* 預設字體顏色 */
-        }
-
         /* 整體樣式 */
         body {
             font-family: 'Roboto', Arial, sans-serif;
@@ -58,6 +53,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            white-space: nowrap;
         }
 
         .content {
@@ -69,6 +65,9 @@
             color: #8b4513;
             justify-content: space-between;
             align-items: center;
+            font-size: 16px;
+            font-weight: 500;
+            white-space: nowrap;
         }
 
         .status {
@@ -135,6 +134,7 @@
 
         /* 通知訊息框 */
         .notification-box {
+            font-weight: 500;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -142,6 +142,7 @@
             border-radius: 12px;
             padding: 15px;
             border: 1px solid rgba(210, 180, 140, 0.4);
+            color: #8b4513;
         }
 
         /* 同步狀態顏色 */
@@ -158,10 +159,10 @@
 
     <div class="container">
         <!-- 地震通知 -->
-        <div class="section">
+        <div class="onsecti">
             <div class="section-title">地震通知🔔</div>
-            <div class="notification-box" id="earthquake-notifications">
-                <span id="earthquake-status" style="color: red;">N/A</span>
+            <div class="notification-box" id="earthquake-notifications" style="display: flex; align-items: center; white-space: nowrap;">
+                <span id="earthquake-status">N/A</span>
             </div>
         </div>
 
@@ -189,7 +190,7 @@
             <div class="content">
                 <div id="door-status-container" style="display: flex; align-items: center; white-space: nowrap;">
                     <span>門狀態：</span>
-                    <span id="door-status" style="color: red;">N/A</span>
+                    <span id="door-status">N/A</span>
                 </div>
                 <div class="button-container">
                     <button class="button" onclick="doorMQTT()">關門</button>
@@ -202,9 +203,10 @@
             <div class="section-title">地震模擬🌍</div>
             <div class="logout-bar">
                 <div class="logout-info">
-                    運行狀態：<span id="state-status" style="color: red;">N/A</span><br>
-                    地震強度：<span id="level-status" style="color: red;">N/A</span><br>
-                    發生地區：<span id="area-status" style="color: red;">N/A</span>
+                    
+                    地震強度：<span id="level-status">N/A</span><br>
+                    發生地區：<span id="area-status">N/A</span><br>
+                    運行狀態：<span id="state-status">N/A</span>
                 </div>
             </div>
             <div class="button-container" style="margin-top: 10px; width: 100%;">
@@ -219,8 +221,8 @@
             <div class="section-title">登入資訊👤</div>
             <div class="logout-bar">
                 <div class="logout-info">
-                    使用者：<span id="email-status" style="color: red;">N/A</span><br>
-                    產品編號：<span id="product_id-status" style="color: red;">N/A</span>
+                    使用者：<span id="email-status">N/A</span><br>
+                    產品編號：<span id="product_id-status">N/A</span>
                 </div>
             </div>
             <div class="button-container" style="margin-top: 10px; width: 100%;">
@@ -266,6 +268,26 @@
                 });
         }
 
+        // 更新電力和門的狀態顏色
+        function updateStatusColors() {
+            const powerStatusElement = document.getElementById('power-status');
+            const doorStatusElement = document.getElementById('door-status');
+
+            // 電力狀態：開 = 綠色，其他 = 紅色
+            if (powerStatusElement.textContent === '開') {
+                powerStatusElement.style.color = 'green';
+            } else {
+                powerStatusElement.style.color = 'red';
+            }
+
+            // 門狀態：關 = 綠色，其他 = 紅色
+            if (doorStatusElement.textContent === '關') {
+                doorStatusElement.style.color = 'green';
+            } else {
+                doorStatusElement.style.color = 'red';
+            }
+        }
+
         // 更新電力和門的狀態
         const powerStatus = document.getElementById('power-status');
         const doorStatus = document.getElementById('door-status');
@@ -281,14 +303,16 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Data fetched:', JSON.stringify(data, null, 2)); // 更清晰的調試信息
-                powerStatus.textContent = data.power;
-                doorStatus.textContent = data.door;
-                earthquakeStatus.textContent = data.earthquake;
+                document.getElementById('power-status').textContent = data.power;
+                document.getElementById('door-status').textContent = data.door;
+                document.getElementById('earthquake-status').textContent = data.earthquake;
                 emailStatus.textContent = data.email;
                 product_idStatus.textContent = data.product_id;
                 stateStatus.textContent = data.state;
                 levelStatus.textContent = data.level;
                 areaStatus.textContent = data.area;
+                // 更新顏色
+                updateStatusColors();
             })
             .catch(error => console.error('Error fetching data:', error));
         }
