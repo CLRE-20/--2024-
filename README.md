@@ -96,6 +96,8 @@
    - **警報記錄表**：儲存地震時間、強度、執行的操作（斷電或復電）。
    - **系統設置表**：記錄 MQTT 配置（伺服器地址、帳號密碼等）。
 
+![N/A](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/SQLite.jpg)
+
 ---
 
 ## 安全設計
