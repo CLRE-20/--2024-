@@ -43,7 +43,7 @@
 - **安全性**：通過 MQTT 帳號密碼驗證，確保數據傳輸安全。
 - **實時監控**：地震警報與電力狀態。
 
-![圖](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/panel.jpg)
+![N/A](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/panel.jpg)
 ---
 
 ## ESP8266 開發板
@@ -72,14 +72,16 @@
    - 管理消息的接收與分發。
    - 支援帳號和密碼認證，限制未授權設備訪問。
 
-![圖](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/mqtt_server.jpg)
+![N/A](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/mqtt_server.jpg)
+
 ### MQTT 客戶端
 1. **運行環境**：使用 Python 開發，與控制面板結合運作。
 2. **功能**：
    - 接收地震感測器數據，並發布到伺服器。
    - 確保 ESP8266 與控制面板之間的實時通信。
 
-![圖](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/mqtt_client.jpg)
+![N/A](https://raw.githubusercontent.com/clre20/Earthquake-power-system-2024-Topics/refs/heads/app.py/mqtt_client.jpg)
+
 ---
 
 ## 資料庫管理
