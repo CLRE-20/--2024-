@@ -3,8 +3,8 @@
 #include <ESP32Servo.h> // 伺服馬達
 
 // WiFi 和 MQTT 配置
-const char* ssid = "mcooest.tw";//Doludo
-const char* password = "mcooest.0810413.11305231.mcl";//077108100
+const char* ssid = "Doludo";//Doludo
+const char* password = "077108100";//077108100
 const char* mqttServer = "mqtt_broker.mcooest.us.kg";
 const int mqttPort = 23419;
 const char* mqttUser = "esp8266";
@@ -16,7 +16,7 @@ PubSubClient client(espClient);
 
 // 創建 Servo 實例
 Servo myservo;
-int servoPin=16;
+int servoPin=14;
 
 void setup() {
   // 初始化序列埠
@@ -40,10 +40,10 @@ void setup() {
   connectToMQTT();
   // 初始化伺服馬達，假設連接在 D4 引腳
   myservo.attach(servoPin);  // 設置舵機控制腳位
-  myservo.write(30); // 初始化伺服馬達為 30 度
+  myservo.write(120); // 初始化伺服馬達為 30 度
   //繼電器
-  pinMode(5,OUTPUT);
-  digitalWrite(5,HIGH);
+  pinMode(12,OUTPUT);
+  digitalWrite(12,HIGH);
 }
 
 void connectToMQTT() {
@@ -77,10 +77,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("]，來自[");
     Serial.print(topic);
     Serial.println("]路由");
-    digitalWrite(5,HIGH);
+    digitalWrite(12,HIGH);
   }
   else if (String(topic) == "mqtt/app" && receivedMessage == "Door") {
-    myservo.write(30); // 初始化伺服馬達為 30 度
+    myservo.write(120); // 初始化伺服馬達為 30 度
     Serial.print("通過認證");
     Serial.print("訊息：");
     Serial.print("[");
@@ -90,7 +90,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.println("]路由");
   }
   else if (String(topic) == "mqtt/app" && receivedMessage == "earthquake") {
-    myservo.write(120); // 初始化伺服馬達為 120 度
+    myservo.write(50); // 初始化伺服馬達為 120 度
     Serial.print("通過認證");
     Serial.print("訊息：");
     Serial.print("[");
@@ -98,7 +98,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("]，來自[");
     Serial.print(topic);
     Serial.println("]路由");
-    digitalWrite(5,LOW);
+    digitalWrite(12,LOW);
   }
   else {
     Serial.print("認證失敗!!");
