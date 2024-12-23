@@ -3,8 +3,8 @@
 #include <ESP32Servo.h> // 伺服馬達
 
 // WiFi 和 MQTT 配置
-const char* ssid = "Doludo";//Doludo
-const char* password = "077108100";//077108100
+const char* ssid = "mc";//Doludo
+const char* password = "12345678";//077108100
 const char* mqttServer = "mqtt_broker.mcooest.us.kg";
 const int mqttPort = 23419;
 const char* mqttUser = "esp8266";
@@ -122,3 +122,4 @@ void loop() {
   //client.publish("/mqtt/esp8266", "Hello from ESP8266");
   //delay(10000); // 每10秒發送一次
 }
+//https://dl.espressif.com/dl/package_esp32_index.json
